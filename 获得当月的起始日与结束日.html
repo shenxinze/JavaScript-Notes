@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<script>
+function getTime(){
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1 > 10 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1);
+    // 本月第一天日期
+    var begin = year + "-" + month + "-01"
+    // 本月最后一天日期    
+    var lastDateOfCurrentMonth = new Date(year,month,0); 
+    var end = year + "-" + month + "-" + lastDateOfCurrentMonth.getDate(); 
+    return [begin,end]
+}
+console.log(getTime());
+</script>
+</body>
+</html>

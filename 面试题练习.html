@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div>
+		<p></p>
+	</div>
+	<script>
+		// 字符串翻转
+		var str = 'absadf2343ddskjlf32423jlll23';
+		function delStr(str){
+			return str.split('').reverse().join('');
+		}
+		console.log(delStr(str));
+
+		// 多维数组变成一维数组
+		var arr = [0,[123],[456],[789],[10,[222222,[333],44]]];
+		var newArr = [];
+		function delArr(arr){
+			arr.map((item,index)=>{
+				if(Array.isArray(item)){
+					delArr(item)
+				}else{
+					newArr.push(item)
+				}
+			})
+			return newArr
+		}
+		console.log('121323',delArr(arr))
+
+		//给所有的盒子添加边框
+    //我们可以通过childNodes来获取所有的子节点
+    var callBackFunc = function (element) {
+        element.style.border = "1px solid red";
+    };
+    function getChildNode(node, callback){
+        //先找到子结点
+        var nodeList = node.childNodes;
+        for(var i = 0;i < nodeList.length;i++){
+            //childNode获取到到的节点包含了各种类型的节点
+            //但是我们只需要元素节点  通过nodeType去判断当前的这个节点是不是元素节点
+            var childNode = nodeList[i];
+            //判断是否是元素结点
+            if(childNode.nodeType == 1){
+                callback(childNode);
+                getChildNode(childNode, callback);
+            }
+        }
+    }
+    getChildNode(document.body, callBackFunc);
+
+
+     function reduce(arr, fn, initial) {
+		  return (function reduceOne(index, value) {
+		    if (index > arr.length - 1) return value // end condition
+		    return reduceOne(index + 1, fn(value, arr[index], index, arr)) // calculate & pass values to next step
+		  })(0, initial) // IIFE. kick off recursion with initial values
+		}
+
+		// 找出出现最多字符 及 次数
+		var str1 = '21dsfdsf32322'
+		var arr1 = str1.split('');
+		str1 = arr1.sort().join('');
+		console.log(str1)
+		var value = '';
+		var index = 0;
+
+		var re = /(\w)\1+/g;
+
+		str1.replace(re,function($0,$1){
+			
+			//alert($0);
+			
+			if(index<$0.length){
+				index = $0.length;
+				value = $1;
+			}
+			
+		});
+
+		//alert('最多的字符:'+value+',重复的次数:'+index);
+
+		var myObject = {
+	    foo: 'bar',
+	    func: function(){
+        var self = this;
+        console.log(this.foo);
+        console.log(self.foo);
+        (function(){
+          console.log(this.foo);
+          console.log(self.foo);
+      	}());
+	    }
+		}
+		myObject.func();
+
+
+		//var list = readHugeList();
+		list = [1,2,3]
+		var nextListItem = function(){
+		    var item = list.pop();
+		    console.log('shend',item)
+		    if(item){
+		        setTimeout(nextListItem(),0);
+		    }
+		}
+		nextListItem();
+		//console.log(nextListItem);
+
+	</script>
+</body>
+</html>
