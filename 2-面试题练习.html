@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		// 字符串转驼峰 例如： border-bottom-color -> borderBottomColor
+		// 方法一
+		let str = 'border-bottom-color';
+		function test1(str){
+			var arr = str.split('-');
+			for(var i = 1; i < arr.length;i++){
+				arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].substring(1);
+			}
+			return arr.join('')
+		}
+		// console.log(test1(str));
+		// 方法二 正则表达式
+		function test2(str){
+			var reg = /-(\w)/g;
+			return str.replace(reg,function($0,$1){
+				return $1.toUpperCase();
+			})
+		}
+		// console.log(test2(str))
+
+		// 查找字符串中出现最多的字符和次数
+		// 方法一
+		let str1 = 'absdssdsssad32j22';
+		function test3(str){
+			var obj = {};
+			var num = 0;
+			var value = '';
+			for(var i = 0; i < str.length ; i++){
+				if(!obj[str[i]]){
+					obj[str[i]] = [];
+				}
+				obj[str[i]].push(str[i]);
+			}
+			for(var attr in obj){
+				if(num < obj[attr].length){
+					num = obj[attr].length;
+					value = obj[attr][0];
+				}
+			}
+			return {
+				num,value
+			}
+		}
+		// console.log(test3(str1));
+		// 方法二 正则表达式
+		function test4(str){
+			str = str.split('').sort().join('');
+			var reg = /(\w)\1+/g;
+			var num = 0;
+			var value = '';
+			str.replace(reg,function($0,$1){
+				if(num < $0.length){
+					num = $0.length;
+					value = $1;
+				}
+			})
+			return {
+				num,value
+			}
+		}
+		// console.log(test4(str1));
+
+		// 给字符串加千分位
+		// 方法一
+		var str2 = '1234567890';
+		function test5(str){
+			var num = str.length%3;
+			var prev = '';
+			var arr = [];
+			var iNow = 0;
+			var tmp = '';
+			if(num != 0){
+				prev = str.substring(0,num);
+				arr.push(prev);
+			}
+			str = str.substring(num);
+			for(var i = 0; i < str.length;i++){
+				iNow++;
+				tmp += str[i];
+				if(iNow == 3 && tmp){
+					arr.push(tmp);
+					tmp = '';
+					iNow = 0;
+				}
+			}
+			return arr.join(',');
+		}
+		// console.log(test5(str2));
+		// 方法二 正则表达式
+		function test6(str){
+			var reg = /(?=(?!\b)(\d{3})+$)/g;
+			return str.replace(reg,',')
+		}
+		// console.log(test6(str2));
+
+		// 返回一个包含数字的数组
+		// 方法一
+		var str3 = 'abs32423safdfa3242safa23';
+		function test7(str){
+			var reg = /(\d)+/g;
+			var arr = [];
+			str.replace(reg,function($0,$1){
+				arr.push($0);
+			})
+			return arr;
+		}
+		// console.log(test7(str3));
+
+		// 方法二
+		function test8(str){
+			var arr = [];
+			var tmp = '';
+			for(var i = 0; i < str.length; i++){
+				if(str.charAt(i) >= '0' && str.charAt(i) <= '9' ){
+					tmp += str.charAt(i);
+				}else{
+					if(tmp){
+						arr.push(tmp);
+						tmp = '';
+					}
+				}
+			}
+			if(tmp){
+				arr.push(tmp);
+				tmp = '';
+			}
+			return arr;
+		}
+		console.log(test8(str3));
+	</script>
+</body>
+</html>
